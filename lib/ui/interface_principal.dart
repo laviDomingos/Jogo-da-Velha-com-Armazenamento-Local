@@ -8,26 +8,30 @@ class InterfacePrincipal extends StatefulWidget {
   State<InterfacePrincipal> createState() => _InterfacePrincipalState();
 }
 
-class _InterfacePrincipalState extends State<InterfacePrincipal> {
-  List<String> _tabuleiro = List.filled(9, '');
-  bool _vezDoX = true;
-  int _pontosX = 0;
-  int _pontosO = 0;
 
+class _InterfacePrincipalState extends State<InterfacePrincipal> {
+  List<String> _tabuleiro = List.filled(9, ''); // O 9 representa as 9 casas do jogo
+  bool _vezDoX = true; // Controla de quem é a vez
+  int _pontosX = 0; // Pontuação do jogador
+  int _pontosO = 0; // Pontuação do jogador
+
+//Carrega o placar salvo do jogador
   @override
   void initState() {
     super.initState();
     _carregarPontuacoes();
   }
 
+//Pega os valores salvos e atualiza na tela
   Future<void> _carregarPontuacoes() async {
     _pontosX = await SharedPrefs.carregarPontuacao('X');
     _pontosO = await SharedPrefs.carregarPontuacao('O');
     setState(() {});
   }
 
-  void _fazerJogada(int index) {
-    if (_tabuleiro[index] != '') return;
+//Verifica se a casa está vazia e se houve empate
+  void _fazerJogada(int index) { //X ou O
+    if (_tabuleiro[index] != '') return; //Troca a vez
 
     setState(() {
       _tabuleiro[index] = _vezDoX ? 'X' : 'O';
@@ -42,9 +46,10 @@ class _InterfacePrincipalState extends State<InterfacePrincipal> {
     }
   }
 
-  void _mostrarVencedor(String jogador) {
-    if (jogador == 'X') {
-      _pontosX++;
+//Mostrar vencedor, mostra o alert de vitória
+  void _mostrarVencedor(String jogador) { 
+    if (jogador == 'X') { 
+      _pontosX++; 
     } else {
       _pontosO++;
     }
