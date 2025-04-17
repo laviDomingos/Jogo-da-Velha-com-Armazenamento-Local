@@ -4,34 +4,32 @@ import '../services/logica_jogo.dart';
 import 'tabuleiro.dart';
 
 class InterfacePrincipal extends StatefulWidget {
+  const InterfacePrincipal({super.key});
+
   @override
   State<InterfacePrincipal> createState() => _InterfacePrincipalState();
 }
 
-
 class _InterfacePrincipalState extends State<InterfacePrincipal> {
-  List<String> _tabuleiro = List.filled(9, ''); // O 9 representa as 9 casas do jogo
-  bool _vezDoX = true; // Controla de quem é a vez
-  int _pontosX = 0; // Pontuação do jogador
-  int _pontosO = 0; // Pontuação do jogador
+  List<String> _tabuleiro = List.filled(9, '');
+  bool _vezDoX = true;
+  int _pontosX = 0;
+  int _pontosO = 0;
 
-//Carrega o placar salvo do jogador
   @override
   void initState() {
     super.initState();
     _carregarPontuacoes();
   }
 
-//Pega os valores salvos e atualiza na tela
   Future<void> _carregarPontuacoes() async {
     _pontosX = await SharedPrefs.carregarPontuacao('X');
     _pontosO = await SharedPrefs.carregarPontuacao('O');
     setState(() {});
   }
 
-//Verifica se a casa está vazia e se houve empate
-  void _fazerJogada(int index) { //X ou O
-    if (_tabuleiro[index] != '') return; //Troca a vez
+  void _fazerJogada(int index) {
+    if (_tabuleiro[index] != '') return;
 
     setState(() {
       _tabuleiro[index] = _vezDoX ? 'X' : 'O';
@@ -46,10 +44,9 @@ class _InterfacePrincipalState extends State<InterfacePrincipal> {
     }
   }
 
-//Mostrar vencedor, mostra o alert de vitória
-  void _mostrarVencedor(String jogador) { 
-    if (jogador == 'X') { 
-      _pontosX++; 
+  void _mostrarVencedor(String jogador) {
+    if (jogador == 'X') {
+      _pontosX++;
     } else {
       _pontosO++;
     }
@@ -112,7 +109,9 @@ class _InterfacePrincipalState extends State<InterfacePrincipal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFF1F5F9),
         title: const Text('Jogo da Velha'),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: _resetarPlacar,
@@ -120,14 +119,30 @@ class _InterfacePrincipalState extends State<InterfacePrincipal> {
           )
         ],
       ),
-      body: Column( // Contagem do placar
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Placar', style: TextStyle(fontSize: 20)),
-          Text('X: $_pontosX | O: $_pontosO'),
-          const SizedBox(height: 20),
-          Tabuleiro(tabuleiro: _tabuleiro, aoTocar: _fazerJogada),
-        ],
+      backgroundColor: const Color(0xFFF1F5F9),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Placar',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 98, 138, 184)),
+            ),
+            Text(
+              'X: $_pontosX | O: $_pontosO',
+              style: const TextStyle(fontSize: 18),
+
+            ),
+            SizedBox(
+              width: 600,
+              height: 600,
+              child: Tabuleiro(
+                tabuleiro: _tabuleiro,
+                aoTocar: _fazerJogada,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

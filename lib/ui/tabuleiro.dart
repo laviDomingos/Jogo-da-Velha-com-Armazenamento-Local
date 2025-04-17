@@ -21,14 +21,16 @@ class Tabuleiro extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: const Color.fromARGB(255, 129, 170, 218),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
               child: Text(
                 tabuleiro[index],
-                style: const TextStyle(
-                    fontSize: 48, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 48, fontWeight: FontWeight.bold,
+                    color: const Color (0xFFF1F5F9),
+                    ),
               ),
             ),
           ),
