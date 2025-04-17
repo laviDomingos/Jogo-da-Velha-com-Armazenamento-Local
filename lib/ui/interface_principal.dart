@@ -106,16 +106,26 @@ class _InterfacePrincipalState extends State<InterfacePrincipal> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF1F5F9),
-        title: const Text('Jogo da Velha'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: _resetarPlacar,
-            icon: const Icon(Icons.refresh),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      backgroundColor: const Color(0xFFF1F5F9),
+      title: Padding(
+        padding: const EdgeInsets.only(top: 31), // Adiciona o espaço superior
+        child: const Text(
+          'Jogo da Velha',
+          style: TextStyle(
+            fontSize: 24, 
+            fontWeight: FontWeight.bold, 
+            color: Color.fromARGB(255, 98, 138, 184),
+          ),
+        ),
+      ),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: _resetarPlacar,
+          icon: const Icon(Icons.refresh),
           )
         ],
       ),
